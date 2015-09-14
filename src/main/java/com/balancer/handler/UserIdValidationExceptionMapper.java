@@ -6,6 +6,8 @@ import javax.ws.rs.ext.Provider;
 
 @Provider
 public class UserIdValidationExceptionMapper implements ExceptionMapper<UserIdValidationException> {
+
+        @Override
         public Response toResponse(UserIdValidationException ex) {
             return Response.status(Response.Status.BAD_REQUEST).
                     entity(ex.getMessage()).
