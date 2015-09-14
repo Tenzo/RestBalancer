@@ -6,16 +6,16 @@ import spock.lang.Unroll
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
 import javax.ws.rs.client.WebTarget
+import javax.ws.rs.core.Response
 
 class UserGroupIntegrationTest extends Specification {
 
-    def HELLO_URL = "http://localhost:8080/restBalancer/group"
+    def GROUP_URL = "http://localhost:8080/restBalancer/group"
 
-    @Unroll
     def "should response with group assigned to user" () {
         given:
         Client client = ClientBuilder.newClient()
-        WebTarget webResource = client.target(HELLO_URL)
+        WebTarget webResource = client.target(GROUP_URL)
 
         when:
         String response = webResource.queryParam("userId", userId)
@@ -29,7 +29,24 @@ class UserGroupIntegrationTest extends Specification {
         userId    | _
         "abc123"  | _
         "user234" | _
+    }
 
+    def "should response with BAD_REQUEST for invalid user id" () {
+        given:
+        Client client = ClientBuilder.newClient()
+        WebTarget webResource = client.target(GROUP_URL)
 
+        when:
+        Response response = webResource.queryParam("userId", userId)
+                .request("text/plain")
+                .get(String.class)
+
+        then:
+        response.status == Response.Status.BAD_REQUEST
+
+        where:
+        userId    | _
+        "abc12#"  | _
+        "user23." | _
     }
 }

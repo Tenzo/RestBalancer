@@ -13,7 +13,7 @@ public class UserGroup {
     private final Balancer balancer = new Balancer();
     @GET
     @Produces(MediaType.TEXT_PLAIN)
-    public String getTestGroup(@QueryParam("step") String userId) {
+    public String getTestGroup(@QueryParam("userId") String userId) {
 
         return balancer.getGroup(userId);
     }
