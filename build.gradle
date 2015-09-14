@@ -37,6 +37,9 @@ test {
     }
 }
 
+[jettyRun, jettyRunWar,jettyStop]*.stopPort = 8081
+[jettyRun, jettyRunWar,jettyStop]*.stopKey = 'stopKey'
+
 task integrationTest(type: Test, dependsOn: "test") {
     include '**/*IntegrationTest*'
 
@@ -49,8 +52,6 @@ task integrationTest(type: Test, dependsOn: "test") {
 
     doLast {
         println"### STOPPING JETTY SERVER ###"
-        jettyStop.stopPort = 8091   // Port for stop signal
-        jettyStop.stopKey = 'stopKey'
         jettyStop.execute()
     }
 

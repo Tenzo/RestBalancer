@@ -23,8 +23,8 @@ class UserGroupIntegrationTest extends Specification {
                             .get(String.class)
 
         then:
-        //response in ["groupA", "groupB", "groupC"]
-        response == "FALSE"
+        response in ["groupA", "groupB", "groupC"]
+
         where:
         userId    | _
         "abc123"  | _
