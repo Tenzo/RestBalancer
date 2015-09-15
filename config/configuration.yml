@@ -1,0 +1,5 @@
+# Groups for ballancing
+groups:
+    groupA: 2
+    groupB: 3
+    groupC: 5
