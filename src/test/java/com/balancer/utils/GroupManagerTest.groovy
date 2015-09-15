@@ -3,12 +3,12 @@ package com.balancer.utils
 import com.balancer.handler.UserIdValidationException
 import spock.lang.Specification
 
-class BalancerTest extends Specification {
+class GroupManagerTest extends Specification {
 
     def "should get testing group for user" () {
 
         given:
-        Balancer balancer = new Balancer()
+        GroupManager balancer = new GroupManager()
 
         when:
         def group = balancer.getGroup(userId)
@@ -25,7 +25,7 @@ class BalancerTest extends Specification {
 
     def "should throw exception for invalid user id" () {
         given:
-        Balancer balancer = new Balancer()
+        GroupManager balancer = new GroupManager()
 
         when:
         balancer.getGroup(userId)

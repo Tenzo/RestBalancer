@@ -1,7 +1,6 @@
 package com.balancer.endpoint
 
 import spock.lang.Specification
-import spock.lang.Unroll
 
 import javax.ws.rs.client.Client
 import javax.ws.rs.client.ClientBuilder
@@ -42,7 +41,7 @@ class UserGroupIntegrationTest extends Specification {
                 .get(String.class)
 
         then:
-        response.status == Response.Status.BAD_REQUEST
+        response.status = 422
 
         where:
         userId    | _
