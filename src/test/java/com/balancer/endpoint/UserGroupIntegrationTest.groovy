@@ -17,12 +17,12 @@ class UserGroupIntegrationTest extends Specification {
         WebTarget webResource = client.target(GROUP_URL)
 
         when:
-        String response = webResource.queryParam("userId", userId)
+        Response response = webResource.queryParam("userId", userId)
                             .request("text/plain")
                             .get(String.class)
 
         then:
-        response in ["groupA", "groupB", "groupC"]
+        response.getEntity().toString() in ["groupA", "groupB", "groupC"]
 
         where:
         userId    | _
@@ -41,7 +41,7 @@ class UserGroupIntegrationTest extends Specification {
                 .get(String.class)
 
         then:
-        response.status = 422
+        response.status == 422
 
         where:
         userId    | _

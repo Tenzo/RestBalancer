@@ -1,18 +1,29 @@
 package com.balancer.model;
 
+import org.jvnet.hk2.annotations.*;
+
 import java.util.*;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UsersRepository {
-    private Map<String, List> groups;
+    private Map<String, List <String>> groups;
 
-    public UsersRepository() {
-        groups = new HashMap<>();
+    public UsersRepository(Map<String, Double> groupsConfig) {
+        groups = groupsConfig.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey(),
+                        entry -> new ArrayList<>()
+                ));
     }
 
-    public Optional getUserGroup (String userId) {
-        return Optional.ofNullable(groups.entrySet().stream()
-                .filter(entry -> entry.getValue().contains(userId))
-                .map(entry -> entry.getKey()));
+    public Optional<String> getUserGroup (String userId) {
+        return groups.entrySet().stream()
+                    .filter(entry -> entry.getValue().contains(userId))
+                    .findAny()
+                    .map(entry -> entry.getKey());
+
     }
 
     public void addUserToGroup(String groupName, String userId) {
@@ -21,7 +32,17 @@ public class UsersRepository {
         }
     }
 
-    public Map<String, List> getGroups() {
-        return groups;
+    public Map<String, Double> getCurrentBalance() {
+        return groups.entrySet().stream()
+                .collect(Collectors.toMap(
+                   entry -> entry.getKey(),
+                    entry -> entry.getValue().size()/getAllUsersCount()
+                ));
+    }
+
+    private Double getAllUsersCount() {
+        return 1.0d * groups.entrySet().stream()
+                .mapToInt(entry -> entry.getValue().size())
+                .sum();
     }
 }

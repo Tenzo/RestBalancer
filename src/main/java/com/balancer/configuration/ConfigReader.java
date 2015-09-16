@@ -12,14 +12,14 @@ public class ConfigReader {
 
     private ConfigReader() {}
 
-    static GroupsConfiguration read(String path) {
+    public static GroupsConfiguration read(String path) {
         Yaml yaml = new Yaml();
         try {
             InputStream in = Files.newInputStream(Paths.get(path));
             return yaml.loadAs(in, GroupsConfiguration.class);
         }
         catch (IOException e) {
-            return new GroupsConfiguration();
+            throw new RuntimeException("O LOL NIE MA CONFIGU");
         }
     }
 }

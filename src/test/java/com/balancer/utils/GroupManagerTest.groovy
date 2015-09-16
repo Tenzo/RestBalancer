@@ -11,10 +11,10 @@ class GroupManagerTest extends Specification {
         GroupManager balancer = new GroupManager()
 
         when:
-        def group = balancer.getGroup(userId)
+        def response = balancer.getGroup(userId)
 
         then:
-        group in ["groupA", "groupB", "groupC"]
+        response.getEntity().toString() in ["groupA", "groupB", "groupC"]
 
         where:
             userId    | _

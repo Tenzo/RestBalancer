@@ -10,14 +10,18 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-@Path("/group")
+@Path("/")
 public class UserGroup {
-    private final GroupManager groupManager = new GroupManager();
+    private static GroupManager groupManager = new GroupManager();
     @GET
+    @Path("/group")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getTestGroup(@QueryParam("userId") String userId) throws UserIdValidationException {
-
-        String group = groupManager.getGroup(userId);
-        return Response.status(200).entity(group).build();
+        return groupManager.getGroup(userId);
+    }
+    @GET
+    @Path("/all")
+    public Response getAllGroups() {
+        return groupManager.getAllGroups();
     }
 }

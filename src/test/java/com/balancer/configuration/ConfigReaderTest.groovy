@@ -9,9 +9,9 @@ class ConfigReaderTest extends Specification {
         given:
         String configYaml = "# Groups for ballancing\n" +
                          "  groups:\n" +
-                         "    groupA: 2\n" +
-                         "    groupB: 3\n" +
-                         "    groupC: 5"
+                         "    groupA: 2.0\n" +
+                         "    groupB: 3.0\n" +
+                         "    groupC: 5.0"
         File tempConfig = File.createTempFile("temp",".yml")
         tempConfig.deleteOnExit()
         tempConfig.write(configYaml)
@@ -22,9 +22,9 @@ class ConfigReaderTest extends Specification {
         GroupsConfiguration configuration = configReader.read(tempConfig.getAbsolutePath())
 
         then:
-        configuration.getGroups().get("groupA") == 2
-        configuration.getGroups().get("groupB") == 3
-        configuration.getGroups().get("groupC") == 5
+        configuration.getGroups().get("groupA") == 2.0
+        configuration.getGroups().get("groupB") == 3.0
+        configuration.getGroups().get("groupC") == 5.0
     }
 
     def "should throw exception on invalid yaml file" () {
