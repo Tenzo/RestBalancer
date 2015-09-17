@@ -1,1 +1,1 @@
-java -jar jetty-runner-9.1.0.M0.jar --port 8081 ../build/libs/restBalancer-0.1.war
+java -jar jetty9.3.jar --port 8081 --config jetty-config.xml ../build/libs/restBalancer-0.1.war
