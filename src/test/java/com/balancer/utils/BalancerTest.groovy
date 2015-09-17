@@ -54,4 +54,36 @@ class BalancerTest extends Specification {
         "cos45" | _
     }
 
+    def "should balance users properly" () {
+        given:
+        Map<String, Double> groups = new HashMap<String, Double>();
+        groups.put("groupA", 2.0d)
+        groups.put("groupB", 3.0d)
+        groups.put("groupC", 5.0d)
+        Map<String, Integer> groupsCapacity = new HashMap<String, Double>();
+        groupsCapacity.put("groupA", 0)
+        groupsCapacity.put("groupB", 0)
+        groupsCapacity.put("groupC", 0)
+        GroupsConfiguration config = new GroupsConfiguration()
+        config.setGroups(groups)
+        Balancer balancer = new Balancer(config)
+
+        when:
+        (1..(10 * multiplyer)).each {
+            def givenGroup = balancer.getGroupForUser("user${it}").getEntity().toString()
+            groupsCapacity.put(givenGroup, groupsCapacity.get(givenGroup) + 1)
+        }
+
+        then:
+        groupsCapacity.get("groupA") == 2 * multiplyer
+        groupsCapacity.get("groupB") == 3 * multiplyer
+        groupsCapacity.get("groupC") == 5 * multiplyer
+
+        where:
+        multiplyer | _
+        1          | _
+        2          | _
+        15         | _
+    }
+
 }
