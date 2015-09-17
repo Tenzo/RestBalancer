@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class GroupsConfiguration {
 
-    private final static String CONFIG_PATH = "/usr/home/jeedeye/IdeaProjects/RestBalancer/config/configuration.yml";
     private Map<String, Double> groups;
 
     public GroupsConfiguration() {

@@ -20,26 +20,22 @@ public class Balancer {
 
     public Response getGroupForUser(String userId) {
         Optional<String> userGroup = repository.getUserGroup(userId);
-        if(userGroup.isPresent()){
+        if(userGroup.isPresent()) {
             return Response.status(Response.Status.OK)
                     .entity(userGroup.get())
                     .build();
         }
         else {
-            Map<String, Double> groupBalance = config.getBalance();
-            Map<String, Double> currentBalance = repository.getCurrentBalance();
-            String group = groupBalance.entrySet().stream().collect(Collectors.toMap(
+            String groupName = config.getBalance().entrySet().stream().collect(Collectors.toMap(
                     entry -> entry.getKey(),
-                    entry -> entry.getValue() - currentBalance.get(entry.getKey())
+                    entry -> entry.getValue() - repository.getCurrentBalance().get(entry.getKey())
             )).entrySet()
                     .stream()
                     .max((e1, e2) -> Double.compare((Double)e1.getValue(), (Double)e2.getValue()))
                     .get()
                     .getKey();
-            repository.addUserToGroup(group, userId);
-            return Response.status(Response.Status.CREATED).entity(group).build();
+            repository.addUserToGroup(groupName, userId);
+            return Response.status(Response.Status.CREATED).entity(groupName).build();
         }
-
     }
-
 }

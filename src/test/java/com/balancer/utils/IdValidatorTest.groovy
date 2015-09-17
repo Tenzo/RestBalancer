@@ -10,7 +10,7 @@ class IdValidatorTest extends Specification {
 
         where:
         userId     | _
-        "test" | _
+        "test"     | _
         "LuBiE345" | _
         "siema435" | _
     }
