@@ -21,6 +21,7 @@ public class UserGroup {
     }
     @GET
     @Path("/all")
+    @Produces(MediaType.TEXT_PLAIN)
     public Response getAllGroups() {
         return groupManager.getAllGroups();
     }

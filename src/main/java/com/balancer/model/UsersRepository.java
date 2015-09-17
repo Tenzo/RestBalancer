@@ -1,20 +1,20 @@
 package com.balancer.model;
 
-import org.jvnet.hk2.annotations.*;
-
-import java.util.*;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UsersRepository {
-    private Map<String, List <String>> groups;
+    private Map<String, Set<String>> groups;
 
     public UsersRepository(Map<String, Double> groupsConfig) {
         groups = groupsConfig.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         entry -> entry.getKey(),
-                        entry -> new ArrayList<>()
+                        entry -> new HashSet<>()
                 ));
     }
 
