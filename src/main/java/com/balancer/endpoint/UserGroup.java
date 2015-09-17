@@ -1,20 +1,27 @@
 package com.balancer.endpoint;
 
-import com.balancer.utils.Balancer;
+import com.balancer.handler.UserIdValidationException;
+import com.balancer.utils.GroupManager;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
-@Path("/group")
+@Path("/")
 public class UserGroup {
-    private final Balancer balancer = new Balancer();
+    private static GroupManager groupManager = new GroupManager();
     @GET
+    @Path("/group")
     @Produces(MediaType.TEXT_PLAIN)
-    public String getTestGroup(@QueryParam("userId") String userId) {
-
-        return balancer.getGroup(userId);
+    public Response getTestGroup(@QueryParam("userId") String userId) throws UserIdValidationException {
+        return groupManager.getGroup(userId);
+    }
+    @GET
+    @Path("/all")
+    public Response getAllGroups() {
+        return groupManager.getAllGroups();
     }
 }

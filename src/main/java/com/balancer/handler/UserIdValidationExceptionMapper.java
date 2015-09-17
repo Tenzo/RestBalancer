@@ -7,11 +7,12 @@ import javax.ws.rs.ext.Provider;
 @Provider
 public class UserIdValidationExceptionMapper implements ExceptionMapper<UserIdValidationException> {
 
-        @Override
-        public Response toResponse(UserIdValidationException ex) {
-            return Response.status(Response.Status.BAD_REQUEST).
-                    entity(ex.getMessage()).
-                    type("text/plain").
-                    build();
-        }
+    @Override
+    public Response toResponse(UserIdValidationException ex) {
+        System.out.println("### IN USER EXCEPTION MAPPER ###");
+        return Response.status(422).
+                entity(ex.getMessage()).
+                type("text/plain").
+                build();
+    }
 }

@@ -2,28 +2,26 @@ package com.balancer.configuration
 
 import spock.lang.Specification
 
+
 class GroupsConfigurationTest extends Specification {
 
-    def "should load configuration" () {
+    def "should get proper weights percentage" () {
         given:
-        def groups = new HashMap<String, Integer> ();
-        groups.put("groupA", values[0])
-        groups.put("groupB", values[1])
-        groups.put("groupC", values[2])
+        Map<String, Double> groups = new HashMap<String, Double> ();
+
+        groups.put("groupA", 2.0d)
+        groups.put("groupB", 3.0d)
+        groups.put("groupC", 5.0d)
 
         GroupsConfiguration config = new GroupsConfiguration();
         config.setGroups(groups)
 
         when:
-        Integer weightsSum = config.getWeightsSum()
+        def computedPercents = config.getBalance()
 
         then:
-        weightsSum == values[0] + values[1] + values[2]
-
-        where:
-        ex | values
-        1  | [4, 5, 2]
-        2  | [5, 7, 8]
-        3  | [4, 3 ,2]
+        computedPercents.get("groupA") == 0.2d
+        computedPercents.get("groupB") == 0.3d
+        computedPercents.get("groupC") == 0.5d
     }
 }
