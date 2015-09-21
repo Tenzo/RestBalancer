@@ -12,13 +12,16 @@ import javax.ws.rs.core.Response;
 
 @Path("/")
 public class UserGroup {
+
     private static GroupManager groupManager = new GroupManager();
+
     @GET
     @Path("/group")
     @Produces(MediaType.TEXT_PLAIN)
     public Response getTestGroup(@QueryParam("userId") String userId) throws UserIdValidationException {
         return groupManager.getGroup(userId);
     }
+
     @GET
     @Path("/all")
     @Produces(MediaType.TEXT_PLAIN)
