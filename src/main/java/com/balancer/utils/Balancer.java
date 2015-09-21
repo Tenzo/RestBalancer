@@ -4,7 +4,6 @@ import com.balancer.configuration.GroupsConfiguration;
 import com.balancer.model.UsersRepository;
 
 import javax.ws.rs.core.Response;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,16 +25,20 @@ public class Balancer {
                     .build();
         }
         else {
-            String groupName = config.getBalance().entrySet().stream().collect(Collectors.toMap(
-                    entry -> entry.getKey(),
-                    entry -> entry.getValue() - repository.getCurrentBalance().get(entry.getKey())
-            )).entrySet()
+            return Response.status(Response.Status.CREATED)
+                    .entity(getBalancedGroup(userId))
+                    .build();
+        }
+    }
+
+    private String getBalancedGroup(String userId) {
+        return config.getBalance().entrySet().stream().collect(Collectors.toMap(
+                entry -> entry.getKey(),
+                entry -> entry.getValue() - repository.getCurrentBalance().get(entry.getKey())
+                )).entrySet()
                     .stream()
                     .max((e1, e2) -> Double.compare((Double)e1.getValue(), (Double)e2.getValue()))
                     .get()
                     .getKey();
-            repository.addUserToGroup(groupName, userId);
-            return Response.status(Response.Status.CREATED).entity(groupName).build();
-        }
     }
 }

@@ -9,7 +9,7 @@ public class UserIdValidationExceptionMapper implements ExceptionMapper<UserIdVa
 
     @Override
     public Response toResponse(UserIdValidationException ex) {
-        System.out.println("### IN USER EXCEPTION MAPPER ###");
+
         return Response.status(422).
                 entity(ex.getMessage()).
                 type("text/plain").
