@@ -9,12 +9,10 @@ import javax.ws.rs.core.Response
 
 class UserGroupIntegrationTest extends Specification {
 
-    def GROUP_URL = "http://localhost:8080/restBalancer/group"
-
     def "should response with group assigned to user" () {
         given:
         Client client = ClientBuilder.newClient()
-        WebTarget webResource = client.target(GROUP_URL)
+        WebTarget webResource = client.target("http://localhost:8080/restBalancer/group")
 
         when:
         Response response = webResource.queryParam("userId", userId)
@@ -33,7 +31,7 @@ class UserGroupIntegrationTest extends Specification {
     def "should response with BAD_REQUEST for invalid user id" () {
         given:
         Client client = ClientBuilder.newClient()
-        WebTarget webResource = client.target(GROUP_URL)
+        WebTarget webResource = client.target("http://localhost:8080/restBalancer/group")
 
         when:
         Response response = webResource.queryParam("userId", userId)

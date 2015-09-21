@@ -10,7 +10,6 @@ import java.util.Random;
 
 public class GroupManager {
 
-    //private final static String[] groups = {"groupA", "groupB", "groupC"};
     private Balancer balancer;
     private GroupsConfiguration configuration;
 
